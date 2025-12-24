@@ -1,6 +1,28 @@
 import type React from "react"
 import { FlightStatusCardAdaptive } from "@workspace/ui/components/flight-status-card"
 import { InstallCommand } from "@/components/install-command"
+import { CodeBlock } from "@/components/code-block"
+
+const usageCode = `import { FlightStatusCardAdaptive } from "components/ui/flight-status-card"
+
+// Auto-switches between dark and light mode
+<FlightStatusCardAdaptive />
+
+// With custom props
+<FlightStatusCardAdaptive
+  departureCode="SFO"
+  arrivalCode="LHR"
+  departureCity="San Francisco"
+  arrivalCity="London"
+  departureTime="FRI, 10:30 AM"
+  arrivalTime="SAT, 6:45 AM"
+  eta="ETA 6:45 AM"
+  timezone="London Time"
+  nextEvent="LANDING IN"
+  nextEventTime="4:15H"
+  progress={65}
+  remainingTime="-4H 15M"
+/>`
 
 export default function FlightStatusCardPage(): React.JSX.Element {
   return (
@@ -114,28 +136,7 @@ export default function FlightStatusCardPage(): React.JSX.Element {
           Code
         </div>
         <div className="space-y-4">
-          <pre className="p-6 bg-muted/30 text-sm overflow-x-auto font-mono">
-            {`import { FlightStatusCardAdaptive } from "components/ui/flight-status-card"
-
-// Auto-switches between dark and light mode
-<FlightStatusCardAdaptive />
-
-// With custom props
-<FlightStatusCardAdaptive
-  departureCode="SFO"
-  arrivalCode="LHR"
-  departureCity="San Francisco"
-  arrivalCity="London"
-  departureTime="FRI, 10:30 AM"
-  arrivalTime="SAT, 6:45 AM"
-  eta="ETA 6:45 AM"
-  timezone="London Time"
-  nextEvent="LANDING IN"
-  nextEventTime="4:15H"
-  progress={65}
-  remainingTime="-4H 15M"
-/>`}
-          </pre>
+          <CodeBlock code={usageCode} lang="tsx" />
           <p className="text-xs text-muted-foreground">
             Import and use directly. All props are optional with sensible
             defaults.
