@@ -3,6 +3,7 @@ import Link from "next/link"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { CommandMenu } from "@/components/command-menu"
 import { DocsSidebar } from "@/components/docs-sidebar"
+import { TableOfContents } from "@/components/table-of-contents"
 
 export default function DocsLayout({
   children,
@@ -53,9 +54,14 @@ export default function DocsLayout({
         <DocsSidebar />
 
         {/* Main content */}
-        <main className="flex-1 max-w-4xl mx-auto w-full px-6 py-12 md:py-16">
-          {children}
+        <main className="flex-1 w-full px-6 py-12 md:py-16">
+          <div className="max-w-4xl mx-auto">
+            {children}
+          </div>
         </main>
+
+        {/* Right Sidebar (TOC) */}
+        <TableOfContents />
       </div>
     </div>
   )
