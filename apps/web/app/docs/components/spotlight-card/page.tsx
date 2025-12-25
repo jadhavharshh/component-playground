@@ -180,9 +180,9 @@ export default function SpotlightCardPage(): React.JSX.Element {
         </div>
         <div className="space-y-12">
           
-          <div className="space-y-4">
-            <h3 className="text-xl font-medium">Multi Spotlight</h3>
-            <div className="p-8 bg-muted/30 rounded-xl flex items-center justify-center">
+          <div className="space-y-0">
+            <h3 className="text-xl font-medium mb-4">Multi Spotlight</h3>
+            <div className="p-8 bg-muted/30 rounded-t-xl rounded-b-none border-b border-border flex items-center justify-center">
               <MultiSpotlightCard className="w-full max-w-lg mx-auto p-6 h-64">
                 <h4 className="text-white font-medium mb-2">Multi Spotlight</h4>
                 <p className="text-neutral-400 text-sm">
@@ -190,12 +190,12 @@ export default function SpotlightCardPage(): React.JSX.Element {
                 </p>
               </MultiSpotlightCard>
             </div>
-            <CodeBlock code={multiSpotlightCode} lang="tsx" />
+            <CodeBlock code={multiSpotlightCode} lang="tsx" className="rounded-t-none" />
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-xl font-medium">Beam Spotlight</h3>
-            <div className="p-8 bg-muted/30 rounded-xl flex items-center justify-center">
+          <div className="space-y-0">
+            <h3 className="text-xl font-medium mb-4">Beam Spotlight</h3>
+            <div className="p-8 bg-muted/30 rounded-t-xl rounded-b-none border-b border-border flex items-center justify-center">
               <BeamSpotlightCard className="w-full max-w-lg mx-auto p-6 h-64">
                 <h4 className="text-white font-medium mb-2">Beam Spotlight</h4>
                 <p className="text-neutral-400 text-sm">
@@ -203,12 +203,12 @@ export default function SpotlightCardPage(): React.JSX.Element {
                 </p>
               </BeamSpotlightCard>
             </div>
-            <CodeBlock code={beamSpotlightCode} lang="tsx" />
+            <CodeBlock code={beamSpotlightCode} lang="tsx" className="rounded-t-none" />
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-xl font-medium">Gradient Follow</h3>
-            <div className="p-8 bg-muted/30 rounded-xl flex items-center justify-center">
+          <div className="space-y-0">
+            <h3 className="text-xl font-medium mb-4">Gradient Follow</h3>
+            <div className="p-8 bg-muted/30 rounded-t-xl rounded-b-none border-b border-border flex items-center justify-center">
               <GradientFollowCard className="w-full max-w-lg mx-auto p-6 h-64">
                 <h4 className="text-white font-medium mb-2">Gradient Follow</h4>
                 <p className="text-neutral-400 text-sm">
@@ -216,12 +216,12 @@ export default function SpotlightCardPage(): React.JSX.Element {
                 </p>
               </GradientFollowCard>
             </div>
-            <CodeBlock code={gradientFollowCode} lang="tsx" />
+            <CodeBlock code={gradientFollowCode} lang="tsx" className="rounded-t-none" />
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-xl font-medium">3D Tilt</h3>
-            <div className="p-8 bg-muted/30 rounded-xl flex items-center justify-center">
+          <div className="space-y-0">
+            <h3 className="text-xl font-medium mb-4">3D Tilt</h3>
+            <div className="p-8 bg-muted/30 rounded-t-xl rounded-b-none border-b border-border flex items-center justify-center">
               <TiltSpotlightCard className="w-full max-w-lg mx-auto p-6 h-64">
                 <h4 className="text-white font-medium mb-2">3D Tilt</h4>
                 <p className="text-neutral-400 text-sm">
@@ -229,7 +229,7 @@ export default function SpotlightCardPage(): React.JSX.Element {
                 </p>
               </TiltSpotlightCard>
             </div>
-            <CodeBlock code={tiltSpotlightCode} lang="tsx" />
+            <CodeBlock code={tiltSpotlightCode} lang="tsx" className="rounded-t-none" />
           </div>
 
         </div>
