@@ -53,8 +53,8 @@ export function CommandMenu() {
                 className="flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
             />
         </div>
-        <Command.List className="max-h-[300px] overflow-y-auto overflow-x-hidden">
-          <Command.Empty className="py-6 text-center text-sm">No results found.</Command.Empty>
+        <Command.List className="h-[300px] overflow-y-auto overflow-x-hidden">
+          <Command.Empty className="flex h-full items-center justify-center py-6 text-center text-sm">No results found.</Command.Empty>
           {docsConfig.nav.map((group) => (
             <Command.Group key={group.title} heading={group.title} className="overflow-hidden p-1 text-foreground [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground">
               {group.items.map((navItem) => (
