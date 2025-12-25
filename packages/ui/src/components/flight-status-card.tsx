@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { cn } from "@workspace/ui/lib/utils"
+import { motion } from "framer-motion"
 
 // Dot matrix patterns for each character (5x7 grid)
 const DOT_MATRIX: Record<string, number[][]> = {
@@ -248,6 +249,7 @@ interface DotMatrixCharProps {
   activeColor?: string
   inactiveColor?: string
   className?: string
+  delay?: number
 }
 
 function DotMatrixChar({
@@ -257,21 +259,24 @@ function DotMatrixChar({
   activeColor = "#b4f54e",
   inactiveColor = "rgba(180, 245, 78, 0.1)",
   className,
+  delay = 0,
 }: DotMatrixCharProps) {
   const matrix = DOT_MATRIX[char.toUpperCase()] ?? DOT_MATRIX["A"]!
   const width = 5 * dotSize + 4 * gap
   const height = 7 * dotSize + 6 * gap
 
   return (
-    <svg
+    <motion.svg
       width={width}
       height={height}
       viewBox={`0 0 ${width} ${height}`}
       className={className}
+      initial="hidden"
+      animate="visible"
     >
       {matrix!.map((row, rowIndex) =>
         row.map((cell, colIndex) => (
-          <rect
+          <motion.rect
             key={`${rowIndex}-${colIndex}`}
             x={colIndex * (dotSize + gap)}
             y={rowIndex * (dotSize + gap)}
@@ -280,6 +285,12 @@ function DotMatrixChar({
             rx={dotSize / 2}
             ry={dotSize / 2}
             fill={cell ? activeColor : inactiveColor}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{
+              delay: delay + colIndex * 0.05 + rowIndex * 0.05,
+              duration: 0.2,
+            }}
             style={
               cell
                 ? {
@@ -290,7 +301,7 @@ function DotMatrixChar({
           />
         ))
       )}
-    </svg>
+    </motion.svg>
   )
 }
 
@@ -314,7 +325,10 @@ function DotMatrixText({
   className,
 }: DotMatrixTextProps) {
   return (
-    <div className={cn("flex items-center", className)} style={{ gap: charGap }}>
+    <div
+      className={cn("flex items-center", className)}
+      style={{ gap: charGap }}
+    >
       {text.split("").map((char, index) => (
         <DotMatrixChar
           key={index}
@@ -323,6 +337,7 @@ function DotMatrixText({
           gap={gap}
           activeColor={activeColor}
           inactiveColor={inactiveColor}
+          delay={index * 0.1}
         />
       ))}
     </div>
@@ -331,11 +346,19 @@ function DotMatrixText({
 
 function HalftonePattern({ className }: { className?: string }) {
   return (
-    <svg
+    <motion.svg
       className={cn("absolute inset-0 pointer-events-none", className)}
       width="100%"
       height="100%"
       xmlns="http://www.w3.org/2000/svg"
+      animate={{
+        backgroundPosition: ["0% 0%", "100% 100%"],
+      }}
+      transition={{
+        duration: 20,
+        repeat: Infinity,
+        ease: "linear",
+      }}
     >
       <defs>
         <pattern
@@ -346,7 +369,20 @@ function HalftonePattern({ className }: { className?: string }) {
           height="8"
           patternUnits="userSpaceOnUse"
         >
-          <circle cx="2" cy="2" r="1.2" fill="rgba(180, 245, 78, 0.15)" />
+          <motion.circle
+            cx="2"
+            cy="2"
+            r="1.2"
+            fill="rgba(180, 245, 78, 0.15)"
+            animate={{
+              opacity: [0.3, 0.6, 0.3],
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
         </pattern>
         <linearGradient id="halftone-fade" x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%" stopColor="white" stopOpacity="0.8" />
@@ -363,7 +399,7 @@ function HalftonePattern({ className }: { className?: string }) {
         fill="url(#halftone)"
         mask="url(#halftone-mask)"
       />
-    </svg>
+    </motion.svg>
   )
 }
 
@@ -429,7 +465,10 @@ function FlightStatusCard({
   className,
 }: FlightStatusCardProps) {
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
       className={cn(
         "relative w-full max-w-[480px] rounded-[28px] p-6 overflow-hidden",
         "bg-[#1a1a1a] dark:bg-[#1a1a1a]",
@@ -457,22 +496,35 @@ function FlightStatusCard({
                 gap={2}
                 charGap={6}
               />
-              <span className="text-[#8a8a8a] text-sm mt-2 font-medium">
+              <motion.span
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3 }}
+                className="text-[#8a8a8a] text-sm mt-2 font-medium"
+              >
                 {departureCity}
-              </span>
-              <span className="text-[#6a6a6a] text-xs mt-0.5 uppercase tracking-wide">
+              </motion.span>
+              <motion.span
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+                className="text-[#6a6a6a] text-xs mt-0.5 uppercase tracking-wide"
+              >
                 {departureTime}
-              </span>
+              </motion.span>
             </div>
 
             {/* Arrow */}
             <div className="flex items-center px-2 mt-1">
-              <svg
+              <motion.svg
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
                 fill="none"
                 className="text-orange-500"
+                initial={{ scaleX: 0, opacity: 0 }}
+                animate={{ scaleX: 1, opacity: 1 }}
+                transition={{ delay: 0.4, type: "spring" }}
               >
                 <path
                   d="M5 12h14m0 0l-4-4m4 4l-4 4"
@@ -481,7 +533,7 @@ function FlightStatusCard({
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
-              </svg>
+              </motion.svg>
             </div>
 
             {/* Arrival */}
@@ -492,17 +544,32 @@ function FlightStatusCard({
                 gap={2}
                 charGap={6}
               />
-              <span className="text-[#8a8a8a] text-sm mt-2 font-medium">
+              <motion.span
+                initial={{ opacity: 0, x: 10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3 }}
+                className="text-[#8a8a8a] text-sm mt-2 font-medium"
+              >
                 {arrivalCity}
-              </span>
-              <span className="text-[#6a6a6a] text-xs mt-0.5 uppercase tracking-wide">
+              </motion.span>
+              <motion.span
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+                className="text-[#6a6a6a] text-xs mt-0.5 uppercase tracking-wide"
+              >
                 {arrivalTime}
-              </span>
+              </motion.span>
             </div>
           </div>
 
           {/* ETA Panel */}
-          <div className="flex flex-col bg-[#252525] rounded-xl p-3 min-w-[130px] border border-[#333]">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.6 }}
+            className="flex flex-col bg-[#252525] rounded-xl p-3 min-w-[130px] border border-[#333]"
+          >
             <div className="flex items-center justify-between mb-1">
               <span className="text-white text-sm font-semibold">{eta}</span>
               <button className="p-1 hover:bg-[#333] rounded-full transition-colors">
@@ -513,17 +580,19 @@ function FlightStatusCard({
             <span className="text-orange-500 text-xs font-bold mt-1 tracking-wide">
               {nextEvent} {nextEventTime}
             </span>
-          </div>
+          </motion.div>
         </div>
 
         {/* Progress bar */}
         <div className="relative mt-4">
           <div className="relative h-12 bg-[#252525] rounded-full overflow-hidden border border-[#333]">
             {/* Progress fill with gradient and glow */}
-            <div
-              className="absolute inset-y-0 left-0 rounded-full flex items-center justify-end pr-2 transition-all duration-500"
+            <motion.div
+              className="absolute inset-y-0 left-0 rounded-full flex items-center justify-end pr-2"
+              initial={{ width: "0%" }}
+              animate={{ width: `${Math.max(progress, 15)}%` }}
+              transition={{ duration: 1.5, ease: "circOut", delay: 0.5 }}
               style={{
-                width: `${Math.max(progress, 15)}%`,
                 background:
                   "linear-gradient(90deg, #7cb518 0%, #a4de02 50%, #b4f54e 100%)",
                 boxShadow:
@@ -531,21 +600,29 @@ function FlightStatusCard({
               }}
             >
               {/* Plane icon */}
-              <div
+              <motion.div
                 className="relative flex items-center justify-center w-8 h-8 rounded-full"
+                animate={{ y: [0, -2, 0] }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
                 style={{
                   background: "rgba(255,255,255,0.2)",
                 }}
               >
                 <PlaneIcon className="w-5 h-5 text-white transform rotate-45" />
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
             {/* Glow effect behind progress */}
-            <div
+            <motion.div
               className="absolute inset-y-0 left-0 rounded-full pointer-events-none"
+              initial={{ width: "0%" }}
+              animate={{ width: `${Math.max(progress, 15)}%` }}
+              transition={{ duration: 1.5, ease: "circOut", delay: 0.5 }}
               style={{
-                width: `${Math.max(progress, 15)}%`,
                 background:
                   "radial-gradient(ellipse at right, rgba(180, 245, 78, 0.4) 0%, transparent 70%)",
                 filter: "blur(8px)",
@@ -554,12 +631,17 @@ function FlightStatusCard({
           </div>
 
           {/* Remaining time */}
-          <div className="absolute right-4 top-1/2 -translate-y-1/2 text-[#6a6a6a] text-sm font-mono font-medium">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.2 }}
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-[#6a6a6a] text-sm font-mono font-medium"
+          >
             {remainingTime}
-          </div>
+          </motion.div>
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }
 
@@ -580,7 +662,10 @@ function FlightStatusCardLight({
   className,
 }: FlightStatusCardProps) {
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
       className={cn(
         "relative w-full max-w-[480px] rounded-[28px] p-6 overflow-hidden",
         "bg-[#f8f8f8]",
@@ -608,22 +693,35 @@ function FlightStatusCardLight({
                 activeColor="#2d7a2d"
                 inactiveColor="rgba(45, 122, 45, 0.15)"
               />
-              <span className="text-[#555] text-sm mt-2 font-medium">
+              <motion.span
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3 }}
+                className="text-[#555] text-sm mt-2 font-medium"
+              >
                 {departureCity}
-              </span>
-              <span className="text-[#888] text-xs mt-0.5 uppercase tracking-wide">
+              </motion.span>
+              <motion.span
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+                className="text-[#888] text-xs mt-0.5 uppercase tracking-wide"
+              >
                 {departureTime}
-              </span>
+              </motion.span>
             </div>
 
             {/* Arrow */}
             <div className="flex items-center px-2 mt-1">
-              <svg
+              <motion.svg
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
                 fill="none"
                 className="text-orange-600"
+                initial={{ scaleX: 0, opacity: 0 }}
+                animate={{ scaleX: 1, opacity: 1 }}
+                transition={{ delay: 0.4, type: "spring" }}
               >
                 <path
                   d="M5 12h14m0 0l-4-4m4 4l-4 4"
@@ -632,7 +730,7 @@ function FlightStatusCardLight({
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
-              </svg>
+              </motion.svg>
             </div>
 
             {/* Arrival */}
@@ -645,17 +743,32 @@ function FlightStatusCardLight({
                 activeColor="#2d7a2d"
                 inactiveColor="rgba(45, 122, 45, 0.15)"
               />
-              <span className="text-[#555] text-sm mt-2 font-medium">
+              <motion.span
+                initial={{ opacity: 0, x: 10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3 }}
+                className="text-[#555] text-sm mt-2 font-medium"
+              >
                 {arrivalCity}
-              </span>
-              <span className="text-[#888] text-xs mt-0.5 uppercase tracking-wide">
+              </motion.span>
+              <motion.span
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+                className="text-[#888] text-xs mt-0.5 uppercase tracking-wide"
+              >
                 {arrivalTime}
-              </span>
+              </motion.span>
             </div>
           </div>
 
           {/* ETA Panel */}
-          <div className="flex flex-col bg-white rounded-xl p-3 min-w-[130px] border border-[#e0e0e0] shadow-sm">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.6 }}
+            className="flex flex-col bg-white rounded-xl p-3 min-w-[130px] border border-[#e0e0e0] shadow-sm"
+          >
             <div className="flex items-center justify-between mb-1">
               <span className="text-[#222] text-sm font-semibold">{eta}</span>
               <button className="p-1 hover:bg-[#f0f0f0] rounded-full transition-colors">
@@ -666,17 +779,19 @@ function FlightStatusCardLight({
             <span className="text-orange-600 text-xs font-bold mt-1 tracking-wide">
               {nextEvent} {nextEventTime}
             </span>
-          </div>
+          </motion.div>
         </div>
 
         {/* Progress bar */}
         <div className="relative mt-4">
           <div className="relative h-12 bg-[#e8e8e8] rounded-full overflow-hidden border border-[#ddd]">
             {/* Progress fill with gradient */}
-            <div
-              className="absolute inset-y-0 left-0 rounded-full flex items-center justify-end pr-2 transition-all duration-500"
+            <motion.div
+              className="absolute inset-y-0 left-0 rounded-full flex items-center justify-end pr-2"
+              initial={{ width: "0%" }}
+              animate={{ width: `${Math.max(progress, 15)}%` }}
+              transition={{ duration: 1.5, ease: "circOut", delay: 0.5 }}
               style={{
-                width: `${Math.max(progress, 15)}%`,
                 background:
                   "linear-gradient(90deg, #4a9c4a 0%, #5cb85c 50%, #7ed17e 100%)",
                 boxShadow:
@@ -684,24 +799,35 @@ function FlightStatusCardLight({
               }}
             >
               {/* Plane icon */}
-              <div
+              <motion.div
                 className="relative flex items-center justify-center w-8 h-8 rounded-full"
+                animate={{ y: [0, -2, 0] }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
                 style={{
                   background: "rgba(255,255,255,0.3)",
                 }}
               >
                 <PlaneIcon className="w-5 h-5 text-white transform rotate-45" />
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </div>
 
           {/* Remaining time */}
-          <div className="absolute right-4 top-1/2 -translate-y-1/2 text-[#666] text-sm font-mono font-medium">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.2 }}
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-[#666] text-sm font-mono font-medium"
+          >
             {remainingTime}
-          </div>
+          </motion.div>
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }
 

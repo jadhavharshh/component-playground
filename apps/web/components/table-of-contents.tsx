@@ -93,18 +93,19 @@ export function TableOfContents(): React.JSX.Element | null {
     return () => observer.disconnect()
   }, [pathname])
 
-  if (headings.length === 0) return null
-
   return (
     <aside className="w-56 shrink-0 hidden xl:block">
-      <div className="sticky top-14 h-[calc(100svh-3.5rem)] overflow-y-auto pl-8 py-10">
-        <p className="font-medium text-xs mb-3 text-muted-foreground/70 uppercase tracking-wider">On This Page</p>
-        <nav className="flex flex-col gap-0.5">
-          {headings.map((heading) => (
-            <a
-              key={heading.id}
-              href={`#${heading.id}`}
-              className={`
+      {headings.length > 0 && (
+        <div className="sticky top-14 h-[calc(100svh-3.5rem)] overflow-y-auto pl-8 py-10">
+          <p className="font-medium text-xs mb-3 text-muted-foreground/70 uppercase tracking-wider">
+            On This Page
+          </p>
+          <nav className="flex flex-col gap-0.5">
+            {headings.map((heading) => (
+              <a
+                key={heading.id}
+                href={`#${heading.id}`}
+                className={`
                 text-xs transition-colors block py-1
                 ${
                   activeId === heading.id
@@ -112,19 +113,20 @@ export function TableOfContents(): React.JSX.Element | null {
                     : "text-muted-foreground hover:text-foreground"
                 }
               `}
-              onClick={(e) => {
-                e.preventDefault()
-                document.getElementById(heading.id)?.scrollIntoView({
-                  behavior: "smooth",
-                })
-                setActiveId(heading.id)
-              }}
-            >
-              {heading.text}
-            </a>
-          ))}
-        </nav>
-      </div>
+                onClick={(e) => {
+                  e.preventDefault()
+                  document.getElementById(heading.id)?.scrollIntoView({
+                    behavior: "smooth",
+                  })
+                  setActiveId(heading.id)
+                }}
+              >
+                {heading.text}
+              </a>
+            ))}
+          </nav>
+        </div>
+      )}
     </aside>
   )
 }
