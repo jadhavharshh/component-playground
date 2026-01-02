@@ -4,12 +4,12 @@ import { InstallCommand } from "@/components/install-command"
 import { CodeBlock } from "@/components/code-block"
 import { ComponentLayout, Section } from "@/components/component-layout"
 
-const usageCode = `import { FlightStatusCardAdaptive } from "components/ui/flight-status-card"
+const defaultCardCode = `import { FlightStatusCardAdaptive } from "@/components/ui/flight-status-card"
 
-// Auto-switches between dark and light mode
-<FlightStatusCardAdaptive />
+<FlightStatusCardAdaptive />`
 
-// With custom props
+const customRouteCode = `import { FlightStatusCardAdaptive } from "@/components/ui/flight-status-card"
+
 <FlightStatusCardAdaptive
   departureCode="SFO"
   arrivalCode="LHR"
@@ -32,52 +32,43 @@ export default function FlightStatusCardPage(): React.JSX.Element {
       description="A detailed flight status widget with dot-matrix airport codes, progress tracking, and ETA information. Pixel-perfect recreation of a premium travel app design."
       componentId="002"
     >
-      <Section title="Preview">
-        <div className="p-8 bg-muted/30 rounded-xl flex items-center justify-center">
-          <FlightStatusCardAdaptive />
-        </div>
-        <p className="text-xs text-muted-foreground">
-          Automatically adapts to light and dark mode. Toggle the theme to see it in action.
-        </p>
-      </Section>
-
-      <Section title="Custom">
-        <div className="p-8 bg-muted/30 rounded-xl flex items-center justify-center">
-          <FlightStatusCardAdaptive
-            departureCode="SFO"
-            arrivalCode="LHR"
-            departureCity="San Francisco"
-            arrivalCity="London"
-            departureTime="FRI, 10:30 AM"
-            arrivalTime="SAT, 6:45 AM"
-            eta="ETA 6:45 AM"
-            timezone="London Time"
-            nextEvent="LANDING IN"
-            nextEventTime="4:15H"
-            progress={65}
-            remainingTime="-4H 15M"
-          />
-        </div>
-        <p className="text-xs text-muted-foreground">
-          Fully customizable with any route, times, and progress state.
-        </p>
-      </Section>
-
       <Section title="Install">
-        <div className="space-y-3">
-          <InstallCommand component="flight-status-card" />
-          <p className="text-xs text-muted-foreground">
-            Requires shadcn CLI. Run <code className="bg-muted px-1 rounded">npx shadcn@latest init</code> first if not set up.
-          </p>
-        </div>
+        <InstallCommand component="flight-status-card" />
       </Section>
 
-      <Section title="Code">
-        <CodeBlock code={usageCode} lang="tsx" />
-        <p className="text-xs text-muted-foreground">
-          Import and use directly. All props are optional with sensible
-          defaults.
-        </p>
+      <Section title="Examples">
+        <div className="space-y-12">
+
+          <div className="space-y-0">
+            <h3 className="text-xl font-medium mb-4">Default</h3>
+            <div className="p-8 bg-muted/30 rounded-t-xl rounded-b-none border border-border flex items-center justify-center">
+              <FlightStatusCardAdaptive />
+            </div>
+            <CodeBlock code={defaultCardCode} lang="tsx" className="rounded-t-none" />
+          </div>
+
+          <div className="space-y-0">
+            <h3 className="text-xl font-medium mb-4">Custom Route</h3>
+            <div className="p-8 bg-muted/30 rounded-t-xl rounded-b-none border border-border flex items-center justify-center">
+              <FlightStatusCardAdaptive
+                departureCode="SFO"
+                arrivalCode="LHR"
+                departureCity="San Francisco"
+                arrivalCity="London"
+                departureTime="FRI, 10:30 AM"
+                arrivalTime="SAT, 6:45 AM"
+                eta="ETA 6:45 AM"
+                timezone="London Time"
+                nextEvent="LANDING IN"
+                nextEventTime="4:15H"
+                progress={65}
+                remainingTime="-4H 15M"
+              />
+            </div>
+            <CodeBlock code={customRouteCode} lang="tsx" className="rounded-t-none" />
+          </div>
+
+        </div>
       </Section>
 
       <Section title="Features">
