@@ -5,6 +5,28 @@ import Link from "next/link"
 import { useEffect, useState, useRef } from "react"
 import { motion, useScroll, useTransform, useInView } from "framer-motion"
 import { ArrowRight, Sparkles, Layers, Zap, Box, Github, ArrowUpRight, Copy, Palette, Code2, Blocks, MousePointerClick, Gauge, Users, Star, GitFork, Download } from "lucide-react"
+import Lenis from "lenis"
+
+function useSmoothScroll() {
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    })
+
+    function raf(time: number) {
+      lenis.raf(time)
+      requestAnimationFrame(raf)
+    }
+
+    requestAnimationFrame(raf)
+
+    return () => {
+      lenis.destroy()
+    }
+  }, [])
+}
 
 function NoiseOverlay() {
   return (
@@ -440,6 +462,7 @@ function TestimonialCard({ quote, author, role, delay = 0 }: { quote: string; au
 }
 
 export default function Page(): React.JSX.Element {
+  useSmoothScroll()
   const { scrollYProgress } = useScroll()
   const heroOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0])
   const heroScale = useTransform(scrollYProgress, [0, 0.2], [1, 0.95])
