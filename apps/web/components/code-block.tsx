@@ -1,4 +1,5 @@
 import { codeToHtml } from "shiki"
+import { CopyButton } from "./copy-button"
 
 interface CodeBlockProps {
   code: string
@@ -57,9 +58,11 @@ export async function CodeBlock({ code, lang = "tsx", className }: CodeBlockProp
         }
       `}</style>
       <div
-        className={`rounded-lg overflow-hidden text-sm w-full [&_pre]:p-4 [&_pre]:overflow-x-auto bg-zinc-100 dark:bg-zinc-900 ${className || ""}`}
-        dangerouslySetInnerHTML={{ __html: html }}
-      />
+        className={`relative rounded-lg text-sm w-full [&_pre]:p-4 [&_pre]:overflow-x-auto bg-zinc-100 dark:bg-zinc-900 max-h-[400px] overflow-auto ${className || ""}`}
+      >
+        <CopyButton code={code.trim()} />
+        <div dangerouslySetInnerHTML={{ __html: html }} />
+      </div>
     </>
   )
 }
