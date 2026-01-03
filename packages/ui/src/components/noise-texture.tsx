@@ -14,10 +14,10 @@ interface NoiseTextureProps {
 
 export function NoiseTexture({
   className,
-  opacity = 0.4,
+  opacity = 0.15,
   speed = 10,
   grain = "medium",
-  blend = "normal",
+  blend = "overlay",
   animate = true,
 }: NoiseTextureProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -33,17 +33,14 @@ export function NoiseTexture({
     const grainSizes: Record<string, number> = {
       fine: 1,
       medium: 2,
-      coarse: 3,
+      coarse: 4,
     }
     const grainSize = grainSizes[grain] ?? 2
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect()
-      const dpr = Math.min(window.devicePixelRatio || 1, 2)
-      canvas.width = Math.ceil(rect.width / grainSize) * dpr
-      canvas.height = Math.ceil(rect.height / grainSize) * dpr
-      canvas.style.width = `${rect.width}px`
-      canvas.style.height = `${rect.height}px`
+      canvas.width = Math.ceil(rect.width / grainSize)
+      canvas.height = Math.ceil(rect.height / grainSize)
     }
 
     resize()
@@ -87,24 +84,14 @@ export function NoiseTexture({
     }
   }, [grain, speed, animate])
 
-  const grainSizes: Record<string, number> = {
-    fine: 1,
-    medium: 2,
-    coarse: 3,
-  }
-
   return (
     <canvas
       ref={canvasRef}
-      className={cn("pointer-events-none absolute inset-0", className)}
+      className={cn("pointer-events-none absolute inset-0 w-full h-full", className)}
       style={{
         opacity,
         mixBlendMode: blend,
         imageRendering: "pixelated",
-        width: "100%",
-        height: "100%",
-        transform: `scale(${grainSizes[grain] ?? 2})`,
-        transformOrigin: "top left",
       }}
     />
   )
