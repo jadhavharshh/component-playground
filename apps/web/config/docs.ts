@@ -32,6 +32,10 @@ export const docsConfig = {
           title: "Circuit Board",
           href: "/docs/components/circuit-board",
         },
+        {
+          title: "Command Menu",
+          href: "/docs/components/command-menu",
+        },
       ],
     },
   ],
