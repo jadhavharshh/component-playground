@@ -1,8 +1,17 @@
 import type React from "react"
+import type { Metadata } from "next"
 import { FlightStatusCardAdaptive } from "@workspace/ui/components/flight-status-card"
 import { InstallCommand } from "@/components/install-command"
 import { CodeBlock } from "@/components/code-block"
 import { ComponentLayout, Section } from "@/components/component-layout"
+
+export const metadata: Metadata = {
+  title: "Flight Status Card Component",
+  description: "A detailed flight status widget with dot-matrix airport codes, progress tracking, and ETA. Free React component with Tailwind CSS by Harsh Jadhav.",
+  alternates: {
+    canonical: "https://componentry.fun/docs/components/flight-status-card",
+  },
+}
 
 const defaultCardCode = `import { FlightStatusCardAdaptive } from "@/components/ui/flight-status-card"
 

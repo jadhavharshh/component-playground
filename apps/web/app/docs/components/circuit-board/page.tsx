@@ -1,9 +1,18 @@
 import type React from "react"
+import type { Metadata } from "next"
 import { CircuitBoard } from "@workspace/ui/components/circuit-board"
 import { InstallCommand } from "@/components/install-command"
 import { CodeBlock } from "@/components/code-block"
 import { ComponentLayout, Section } from "@/components/component-layout"
 import { Database, Server, Cloud, Globe, Shield, GitBranch, Cpu, HardDrive, Wifi } from "lucide-react"
+
+export const metadata: Metadata = {
+  title: "Circuit Board Component",
+  description: "Animated circuit board visualization with nodes and connections. Perfect for tech diagrams and flow visualizations. Free React component by Harsh Jadhav.",
+  alternates: {
+    canonical: "https://componentry.fun/docs/components/circuit-board",
+  },
+}
 
 const simpleFlowCode = `import { CircuitBoard } from "@/components/ui/circuit-board"
 import { Cloud, Server, Shield, Database } from "lucide-react"

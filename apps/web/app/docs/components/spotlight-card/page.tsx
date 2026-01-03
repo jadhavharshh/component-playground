@@ -1,4 +1,5 @@
 import type React from "react"
+import type { Metadata } from "next"
 import {
   SpotlightCard,
   SpotlightCardContent,
@@ -13,6 +14,14 @@ import {
 import { InstallCommand } from "@/components/install-command"
 import { CodeBlock } from "@/components/code-block"
 import { ComponentLayout, Section } from "@/components/component-layout"
+
+export const metadata: Metadata = {
+  title: "Spotlight Card Component",
+  description: "Interactive spotlight card with cursor tracking effects, tilt animations, and gradient highlights. Free React component by Harsh Jadhav.",
+  alternates: {
+    canonical: "https://componentry.fun/docs/components/spotlight-card",
+  },
+}
 
 const defaultSpotlightCode = `import {
   SpotlightCard,

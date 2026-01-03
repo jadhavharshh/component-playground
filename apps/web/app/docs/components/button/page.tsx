@@ -1,10 +1,19 @@
 import type React from "react"
+import type { Metadata } from "next"
 import { Button } from "@workspace/ui/components/button"
 import { ShimmerButton } from "@workspace/ui/components/shimmer-button"
 import { InteractiveHoverButton } from "@workspace/ui/components/interactive-hover-button"
 import { PulsatingButton } from "@workspace/ui/components/pulsating-button"
 import { ComponentLayout, Section } from "@/components/component-layout"
 import { CodeBlock } from "@/components/code-block"
+
+export const metadata: Metadata = {
+  title: "Button Component",
+  description: "Beautiful React button components with shimmer, pulsating, and hover effects. Free animated buttons with Tailwind CSS by Harsh Jadhav.",
+  alternates: {
+    canonical: "https://componentry.fun/docs/components/button",
+  },
+}
 
 export default function ButtonPage(): React.JSX.Element {
   return (

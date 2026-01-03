@@ -1,8 +1,17 @@
 import type React from "react"
+import type { Metadata } from "next"
 import { BorderBeam } from "@workspace/ui/components/border-beam"
 import { InstallCommand } from "@/components/install-command"
 import { CodeBlock } from "@/components/code-block"
 import { ComponentLayout, Section } from "@/components/component-layout"
+
+export const metadata: Metadata = {
+  title: "Border Beam Component",
+  description: "Animated border beam effect that follows the border path. Beautiful glowing animation for React with Tailwind CSS by Harsh Jadhav.",
+  alternates: {
+    canonical: "https://componentry.fun/docs/components/border-beam",
+  },
+}
 
 const defaultBeamCode = `import { BorderBeam } from "@/components/ui/border-beam"
 
