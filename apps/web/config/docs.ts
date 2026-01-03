@@ -38,5 +38,22 @@ export const docsConfig = {
         },
       ],
     },
+    {
+      title: "Dither Effects",
+      items: [
+        {
+          title: "Dither Gradient",
+          href: "/docs/components/dither-gradient",
+        },
+        {
+          title: "Liquid Blob",
+          href: "/docs/components/liquid-blob",
+        },
+        {
+          title: "Noise Texture",
+          href: "/docs/components/noise-texture",
+        },
+      ],
+    },
   ],
 }
