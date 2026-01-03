@@ -29,9 +29,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const componentPages = [
     "flight-status-card",
     "border-beam",
-    "button",
     "spotlight-card",
     "circuit-board",
+    "command-menu",
+    "dither-gradient",
+    "liquid-blob",
+    "noise-texture",
   ]
 
   const componentSitemap: MetadataRoute.Sitemap = componentPages.map((component) => ({

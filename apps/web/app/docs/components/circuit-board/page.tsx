@@ -19,10 +19,10 @@ import { Cloud, Server, Shield, Database } from "lucide-react"
 
 <CircuitBoard
   nodes={[
-    { id: "start", x: 80, y: 150, icon: <Cloud className="w-4 h-4" /> },
-    { id: "process", x: 250, y: 80, icon: <Server className="w-4 h-4" /> },
-    { id: "validate", x: 250, y: 220, icon: <Shield className="w-4 h-4" /> },
-    { id: "end", x: 420, y: 150, icon: <Database className="w-4 h-4" /> },
+    { id: "start", x: 80, y: 150, label: "Cloud", icon: <Cloud className="w-4 h-4" /> },
+    { id: "process", x: 250, y: 80, label: "Server", icon: <Server className="w-4 h-4" /> },
+    { id: "validate", x: 250, y: 220, label: "Validate", icon: <Shield className="w-4 h-4" /> },
+    { id: "end", x: 420, y: 150, label: "Database", icon: <Database className="w-4 h-4" /> },
   ]}
   connections={[
     { from: "start", to: "process", animated: true },
@@ -39,11 +39,11 @@ import { Globe, GitBranch, Server, Database } from "lucide-react"
 
 <CircuitBoard
   nodes={[
-    { id: "user", x: 60, y: 150, icon: <Globe className="w-4 h-4" /> },
-    { id: "lb", x: 180, y: 150, icon: <GitBranch className="w-4 h-4" /> },
-    { id: "api1", x: 300, y: 80, icon: <Server className="w-4 h-4" /> },
-    { id: "api2", x: 300, y: 220, icon: <Server className="w-4 h-4" /> },
-    { id: "db", x: 420, y: 150, icon: <Database className="w-4 h-4" /> },
+    { id: "user", x: 60, y: 150, label: "User", icon: <Globe className="w-4 h-4" /> },
+    { id: "lb", x: 180, y: 150, label: "Load Balancer", icon: <GitBranch className="w-4 h-4" /> },
+    { id: "api1", x: 300, y: 80, label: "API 1", icon: <Server className="w-4 h-4" /> },
+    { id: "api2", x: 300, y: 220, label: "API 2", icon: <Server className="w-4 h-4" /> },
+    { id: "db", x: 420, y: 150, label: "Database", icon: <Database className="w-4 h-4" /> },
   ]}
   connections={[
     { from: "user", to: "lb", animated: true },
@@ -61,9 +61,9 @@ import { Cpu, HardDrive, Database } from "lucide-react"
 
 <CircuitBoard
   nodes={[
-    { id: "cpu", x: 100, y: 100, icon: <Cpu className="w-4 h-4" /> },
-    { id: "ram", x: 250, y: 100, icon: <HardDrive className="w-4 h-4" /> },
-    { id: "storage", x: 400, y: 100, icon: <Database className="w-4 h-4" /> },
+    { id: "cpu", x: 100, y: 100, label: "CPU", icon: <Cpu className="w-4 h-4" /> },
+    { id: "ram", x: 250, y: 100, label: "RAM", icon: <HardDrive className="w-4 h-4" /> },
+    { id: "storage", x: 400, y: 100, label: "Storage", icon: <Database className="w-4 h-4" /> },
   ]}
   connections={[
     { from: "cpu", to: "ram", bidirectional: true },
@@ -79,10 +79,10 @@ import { Wifi, Server, Globe } from "lucide-react"
 
 <CircuitBoard
   nodes={[
-    { id: "router", x: 240, y: 100, icon: <Wifi className="w-4 h-4" /> },
-    { id: "server1", x: 100, y: 220, icon: <Server className="w-4 h-4" /> },
-    { id: "server2", x: 240, y: 220, icon: <Server className="w-4 h-4" /> },
-    { id: "server3", x: 380, y: 220, icon: <Server className="w-4 h-4" /> },
+    { id: "router", x: 240, y: 100, label: "Router", icon: <Wifi className="w-4 h-4" /> },
+    { id: "server1", x: 100, y: 220, label: "Server 1", icon: <Server className="w-4 h-4" /> },
+    { id: "server2", x: 240, y: 220, label: "Server 2", icon: <Server className="w-4 h-4" /> },
+    { id: "server3", x: 380, y: 220, label: "Server 3", icon: <Server className="w-4 h-4" /> },
   ]}
   connections={[
     { from: "router", to: "server1", animated: true },
@@ -99,7 +99,7 @@ export default function CircuitBoardPage(): React.JSX.Element {
     <ComponentLayout
       title="Circuit Board"
       description="An interactive circuit board layout component with animated electricity paths that pulse between connected nodes. Perfect for visualizing data flows, system architectures, and network topologies."
-      componentId="005"
+
     >
       <Section title="Install">
         <InstallCommand component="circuit-board" />
@@ -113,10 +113,10 @@ export default function CircuitBoardPage(): React.JSX.Element {
             <div className="p-8 bg-muted/30 rounded-t-xl rounded-b-none border-b border-border flex items-center justify-center">
               <CircuitBoard
                 nodes={[
-                  { id: "start", x: 80, y: 150, icon: <Cloud className="w-4 h-4" /> },
-                  { id: "process", x: 250, y: 80, icon: <Server className="w-4 h-4" /> },
-                  { id: "validate", x: 250, y: 220, icon: <Shield className="w-4 h-4" /> },
-                  { id: "end", x: 420, y: 150, icon: <Database className="w-4 h-4" /> },
+                  { id: "start", x: 80, y: 150, label: "Cloud", icon: <Cloud className="w-4 h-4" /> },
+                  { id: "process", x: 250, y: 80, label: "Server", icon: <Server className="w-4 h-4" /> },
+                  { id: "validate", x: 250, y: 220, label: "Validate", icon: <Shield className="w-4 h-4" /> },
+                  { id: "end", x: 420, y: 150, label: "Database", icon: <Database className="w-4 h-4" /> },
                 ]}
                 connections={[
                   { from: "start", to: "process", animated: true },
@@ -136,11 +136,11 @@ export default function CircuitBoardPage(): React.JSX.Element {
             <div className="p-8 bg-muted/30 rounded-t-xl rounded-b-none border-b border-border flex items-center justify-center">
               <CircuitBoard
                 nodes={[
-                  { id: "user", x: 60, y: 150, icon: <Globe className="w-4 h-4" /> },
-                  { id: "lb", x: 180, y: 150, icon: <GitBranch className="w-4 h-4" /> },
-                  { id: "api1", x: 300, y: 80, icon: <Server className="w-4 h-4" /> },
-                  { id: "api2", x: 300, y: 220, icon: <Server className="w-4 h-4" /> },
-                  { id: "db", x: 420, y: 150, icon: <Database className="w-4 h-4" /> },
+                  { id: "user", x: 60, y: 150, label: "User", icon: <Globe className="w-4 h-4" /> },
+                  { id: "lb", x: 180, y: 150, label: "Load Balancer", icon: <GitBranch className="w-4 h-4" /> },
+                  { id: "api1", x: 300, y: 80, label: "API 1", icon: <Server className="w-4 h-4" /> },
+                  { id: "api2", x: 300, y: 220, label: "API 2", icon: <Server className="w-4 h-4" /> },
+                  { id: "db", x: 420, y: 150, label: "Database", icon: <Database className="w-4 h-4" /> },
                 ]}
                 connections={[
                   { from: "user", to: "lb", animated: true },
@@ -161,9 +161,9 @@ export default function CircuitBoardPage(): React.JSX.Element {
             <div className="p-8 bg-muted/30 rounded-t-xl rounded-b-none border-b border-border flex items-center justify-center">
               <CircuitBoard
                 nodes={[
-                  { id: "cpu", x: 100, y: 100, icon: <Cpu className="w-4 h-4" /> },
-                  { id: "ram", x: 250, y: 100, icon: <HardDrive className="w-4 h-4" /> },
-                  { id: "storage", x: 400, y: 100, icon: <Database className="w-4 h-4" /> },
+                  { id: "cpu", x: 100, y: 100, label: "CPU", icon: <Cpu className="w-4 h-4" /> },
+                  { id: "ram", x: 250, y: 100, label: "RAM", icon: <HardDrive className="w-4 h-4" /> },
+                  { id: "storage", x: 400, y: 100, label: "Storage", icon: <Database className="w-4 h-4" /> },
                 ]}
                 connections={[
                   { from: "cpu", to: "ram", bidirectional: true },
@@ -182,10 +182,10 @@ export default function CircuitBoardPage(): React.JSX.Element {
             <div className="p-8 bg-muted/30 rounded-t-xl rounded-b-none border-b border-border flex items-center justify-center">
               <CircuitBoard
                 nodes={[
-                  { id: "router", x: 240, y: 100, icon: <Wifi className="w-4 h-4" /> },
-                  { id: "server1", x: 100, y: 220, icon: <Server className="w-4 h-4" /> },
-                  { id: "server2", x: 240, y: 220, icon: <Server className="w-4 h-4" /> },
-                  { id: "server3", x: 380, y: 220, icon: <Server className="w-4 h-4" /> },
+                  { id: "router", x: 240, y: 100, label: "Router", icon: <Wifi className="w-4 h-4" /> },
+                  { id: "server1", x: 100, y: 220, label: "Server 1", icon: <Server className="w-4 h-4" /> },
+                  { id: "server2", x: 240, y: 220, label: "Server 2", icon: <Server className="w-4 h-4" /> },
+                  { id: "server3", x: 380, y: 220, label: "Server 3", icon: <Server className="w-4 h-4" /> },
                 ]}
                 connections={[
                   { from: "router", to: "server1", animated: true },

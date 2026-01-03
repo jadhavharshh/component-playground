@@ -83,7 +83,7 @@ export default function CommandMenuPage(): React.JSX.Element {
     <ComponentLayout
       title="Command Menu"
       description="A macOS Spotlight-style command menu with animated search, smooth transitions, keyboard navigation, and customizable groups."
-      componentId="006"
+
     >
       <Section title="Install">
         <InstallCommand component="command-menu" />

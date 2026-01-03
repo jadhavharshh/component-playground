@@ -4,24 +4,18 @@ import { cn } from "@workspace/ui/lib/utils"
 interface ComponentLayoutProps {
   title: string
   description: string
-  componentId: string
   children: React.ReactNode
 }
 
 export function ComponentLayout({
   title,
   description,
-  componentId,
   children,
 }: ComponentLayoutProps) {
   return (
     <div className="space-y-16">
       <header className="grid md:grid-cols-[120px_1fr] gap-8">
-        <div>
-          <span className="text-6xl font-light text-muted-foreground/50">
-            {componentId}
-          </span>
-        </div>
+        <div />
         <div className="space-y-4">
           <h1
             className="text-5xl md:text-6xl tracking-tight"

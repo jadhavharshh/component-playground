@@ -13,10 +13,6 @@ export const docsConfig = {
       title: "Components",
       items: [
         {
-          title: "Button",
-          href: "/docs/components/button",
-        },
-        {
           title: "Flight Status Card",
           href: "/docs/components/flight-status-card",
         },

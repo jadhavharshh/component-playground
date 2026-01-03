@@ -56,7 +56,7 @@ export default function DitherGradientPage(): React.JSX.Element {
     <ComponentLayout
       title="Dither Gradient"
       description="An animated dithered gradient background effect using canvas with Bayer matrix dithering. Creates a beautiful retro-style aesthetic with customizable colors and animation."
-      componentId="007"
+
     >
       <Section title="Install">
         <InstallCommand component="dither-gradient" />

@@ -75,7 +75,7 @@ export default function BorderBeamPage(): React.JSX.Element {
     <ComponentLayout
       title="Border Beam"
       description="A moving gradient beam that travels along the border of its container. Perfect for highlighting active states, new features, or premium content."
-      componentId="004"
+
     >
       <Section title="Install">
         <InstallCommand component="border-beam" />

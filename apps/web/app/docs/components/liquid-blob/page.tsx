@@ -57,7 +57,7 @@ export default function LiquidBlobPage(): React.JSX.Element {
     <ComponentLayout
       title="Liquid Blob"
       description="Animated liquid morphing blob shapes that create a beautiful organic background effect. Perfect for hero sections, cards, and creating depth with glassmorphism style."
-      componentId="008"
+
     >
       <Section title="Install">
         <InstallCommand component="liquid-blob" />

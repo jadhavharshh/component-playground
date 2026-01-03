@@ -115,7 +115,7 @@ export default function SpotlightCardPage(): React.JSX.Element {
     <ComponentLayout
       title="Spotlight Card"
       description="Interactive cards with cursor-following spotlight effects, animated gradient borders, and 3D tilt animations. Inspired by the premium designs of Vercel, Linear, and Stripe."
-      componentId="003"
+
     >
       <Section title="Install">
         <InstallCommand component="spotlight-card" />

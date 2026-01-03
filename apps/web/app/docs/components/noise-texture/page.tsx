@@ -52,7 +52,7 @@ export default function NoiseTexturePage(): React.JSX.Element {
     <ComponentLayout
       title="Noise Texture"
       description="An animated noise/grain texture overlay effect. Adds a film grain aesthetic to any background with customizable grain size, animation speed, and blend modes."
-      componentId="009"
+
     >
       <Section title="Install">
         <InstallCommand component="noise-texture" />

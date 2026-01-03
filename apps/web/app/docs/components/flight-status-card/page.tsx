@@ -39,7 +39,7 @@ export default function FlightStatusCardPage(): React.JSX.Element {
     <ComponentLayout
       title="Flight Status Card"
       description="A detailed flight status widget with dot-matrix airport codes, progress tracking, and ETA information. Pixel-perfect recreation of a premium travel app design."
-      componentId="002"
+
     >
       <Section title="Install">
         <InstallCommand component="flight-status-card" />
