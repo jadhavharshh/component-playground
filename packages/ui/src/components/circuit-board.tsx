@@ -69,8 +69,7 @@ function CircuitBoard({
     // Check for dark class on html/body
     const checkTheme = () => {
       const isDarkMode = document.documentElement.classList.contains("dark") ||
-        document.body.classList.contains("dark") ||
-        window.matchMedia("(prefers-color-scheme: dark)").matches
+        document.body.classList.contains("dark")
       setIsDark(isDarkMode)
     }
 
@@ -174,7 +173,7 @@ function CircuitBoard({
         "relative overflow-hidden rounded-xl border",
         isDark
           ? "bg-neutral-950/50 border-neutral-800/50"
-          : "bg-neutral-100/80 border-neutral-300/60",
+          : "bg-white/80 border-neutral-200/60",
         className
       )}
       style={{ width, height }}
@@ -482,8 +481,7 @@ function CircuitNode({
   React.useEffect(() => {
     const checkTheme = () => {
       const isDarkMode = document.documentElement.classList.contains("dark") ||
-        document.body.classList.contains("dark") ||
-        window.matchMedia("(prefers-color-scheme: dark)").matches
+        document.body.classList.contains("dark")
       setIsDark(isDarkMode)
     }
 
@@ -597,8 +595,7 @@ function CircuitTrace({
   React.useEffect(() => {
     const checkTheme = () => {
       const isDarkMode = document.documentElement.classList.contains("dark") ||
-        document.body.classList.contains("dark") ||
-        window.matchMedia("(prefers-color-scheme: dark)").matches
+        document.body.classList.contains("dark")
       setIsDark(isDarkMode)
     }
 
