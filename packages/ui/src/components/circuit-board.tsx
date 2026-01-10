@@ -36,6 +36,8 @@ interface CircuitBoardProps extends React.HTMLAttributes<HTMLDivElement> {
   nodeColor?: string
   pulseSpeed?: number
   traceWidth?: number
+  /** Force a specific theme variant. Defaults to auto-detect from system. */
+  variant?: "light" | "dark" | "auto"
 }
 
 function CircuitBoard({
@@ -45,15 +47,54 @@ function CircuitBoard({
   height = 400,
   gridSize = 20,
   showGrid = true,
-  gridColor = "rgba(163, 163, 163, 0.08)",
-  traceColor = "rgba(163, 163, 163, 0.25)",
-  pulseColor = "rgba(163, 163, 163, 0.6)",
-  nodeColor = "rgba(163, 163, 163, 0.5)",
+  gridColor,
+  traceColor,
+  pulseColor,
+  nodeColor,
   pulseSpeed = 2,
   traceWidth = 2,
+  variant = "auto",
   className,
   ...props
 }: CircuitBoardProps) {
+  // Theme-aware color defaults
+  const [isDark, setIsDark] = React.useState(true)
+
+  React.useEffect(() => {
+    if (variant !== "auto") {
+      setIsDark(variant === "dark")
+      return
+    }
+
+    // Check for dark class on html/body
+    const checkTheme = () => {
+      const isDarkMode = document.documentElement.classList.contains("dark") ||
+        document.body.classList.contains("dark") ||
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+      setIsDark(isDarkMode)
+    }
+
+    checkTheme()
+
+    // Listen for changes
+    const observer = new MutationObserver(checkTheme)
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] })
+    observer.observe(document.body, { attributes: true, attributeFilter: ["class"] })
+
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)")
+    mediaQuery.addEventListener("change", checkTheme)
+
+    return () => {
+      observer.disconnect()
+      mediaQuery.removeEventListener("change", checkTheme)
+    }
+  }, [variant])
+
+  // Compute theme-aware colors
+  const computedGridColor = gridColor || (isDark ? "rgba(163, 163, 163, 0.08)" : "rgba(64, 64, 64, 0.12)")
+  const computedTraceColor = traceColor || (isDark ? "rgba(163, 163, 163, 0.25)" : "rgba(64, 64, 64, 0.35)")
+  const computedPulseColor = pulseColor || (isDark ? "rgba(163, 163, 163, 0.6)" : "rgba(64, 64, 64, 0.7)")
+  const computedNodeColor = nodeColor || (isDark ? "rgba(163, 163, 163, 0.5)" : "rgba(64, 64, 64, 0.6)")
   const nodeMap = React.useMemo(() => {
     return new Map(nodes.map((node) => [node.id, node]))
   }, [nodes])
@@ -73,10 +114,10 @@ function CircuitBoard({
     (from: CircuitNode, to: CircuitNode): string => {
       const fromSize = getNodeSize(from.size) / 2 + 4
       const toSize = getNodeSize(to.size) / 2 + 4
-      
+
       const dx = to.x - from.x
       const dy = to.y - from.y
-      
+
       // Calculate start and end points offset from node centers
       let startX = from.x
       let startY = from.y
@@ -102,22 +143,38 @@ function CircuitBoard({
   )
 
   const getStatusColor = (status?: CircuitNode["status"]) => {
-    switch (status) {
-      case "active":
-        return "rgba(163, 163, 163, 0.7)"
-      case "processing":
-        return "rgba(163, 163, 163, 0.5)"
-      case "error":
-        return "rgba(120, 113, 108, 0.6)"
-      default:
-        return nodeColor
+    if (isDark) {
+      switch (status) {
+        case "active":
+          return "rgba(163, 163, 163, 0.7)"
+        case "processing":
+          return "rgba(163, 163, 163, 0.5)"
+        case "error":
+          return "rgba(120, 113, 108, 0.6)"
+        default:
+          return computedNodeColor
+      }
+    } else {
+      switch (status) {
+        case "active":
+          return "rgba(64, 64, 64, 0.8)"
+        case "processing":
+          return "rgba(64, 64, 64, 0.6)"
+        case "error":
+          return "rgba(180, 83, 83, 0.7)"
+        default:
+          return computedNodeColor
+      }
     }
   }
 
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-xl bg-neutral-950/50 border border-neutral-800/50",
+        "relative overflow-hidden rounded-xl border",
+        isDark
+          ? "bg-neutral-950/50 border-neutral-800/50"
+          : "bg-neutral-100/80 border-neutral-300/60",
         className
       )}
       style={{ width, height }}
@@ -147,7 +204,7 @@ function CircuitBoard({
               height={gridSize}
               patternUnits="userSpaceOnUse"
             >
-              <circle cx={gridSize / 2} cy={gridSize / 2} r="0.5" fill={gridColor} />
+              <circle cx={gridSize / 2} cy={gridSize / 2} r="0.5" fill={computedGridColor} />
             </pattern>
           )}
 
@@ -160,7 +217,7 @@ function CircuitBoard({
             >
               <stop offset="0%" stopColor="transparent" />
               <stop offset="40%" stopColor="transparent" />
-              <stop offset="50%" stopColor={conn.pulseColor || pulseColor} />
+              <stop offset="50%" stopColor={conn.pulseColor || computedPulseColor} />
               <stop offset="60%" stopColor="transparent" />
               <stop offset="100%" stopColor="transparent" />
             </linearGradient>
@@ -187,7 +244,7 @@ function CircuitBoard({
               <motion.path
                 d={path}
                 fill="none"
-                stroke={conn.color || traceColor}
+                stroke={conn.color || computedTraceColor}
                 strokeWidth={traceWidth}
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -201,7 +258,7 @@ function CircuitBoard({
                 <motion.path
                   d={path}
                   fill="none"
-                  stroke={conn.pulseColor || pulseColor}
+                  stroke={conn.pulseColor || computedPulseColor}
                   strokeWidth={traceWidth + 2}
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -223,7 +280,7 @@ function CircuitBoard({
                 <motion.path
                   d={path}
                   fill="none"
-                  stroke={conn.pulseColor || pulseColor}
+                  stroke={conn.pulseColor || computedPulseColor}
                   strokeWidth={traceWidth + 2}
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -420,25 +477,58 @@ function CircuitNode({
   className,
   onClick,
 }: CircuitNodeComponentProps) {
+  const [isDark, setIsDark] = React.useState(true)
+
+  React.useEffect(() => {
+    const checkTheme = () => {
+      const isDarkMode = document.documentElement.classList.contains("dark") ||
+        document.body.classList.contains("dark") ||
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+      setIsDark(isDarkMode)
+    }
+
+    checkTheme()
+
+    const observer = new MutationObserver(checkTheme)
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] })
+    observer.observe(document.body, { attributes: true, attributeFilter: ["class"] })
+
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)")
+    mediaQuery.addEventListener("change", checkTheme)
+
+    return () => {
+      observer.disconnect()
+      mediaQuery.removeEventListener("change", checkTheme)
+    }
+  }, [])
+
   const sizeClasses = {
     sm: "w-8 h-8",
     md: "w-12 h-12",
     lg: "w-16 h-16",
   }
 
-  const statusColors = {
-    active: "rgba(163, 163, 163, 0.7)",
-    inactive: "rgba(115, 115, 115, 0.4)",
-    processing: "rgba(163, 163, 163, 0.5)",
-    error: "rgba(120, 113, 108, 0.6)",
-  }
+  const statusColors = isDark
+    ? {
+      active: "rgba(163, 163, 163, 0.7)",
+      inactive: "rgba(115, 115, 115, 0.4)",
+      processing: "rgba(163, 163, 163, 0.5)",
+      error: "rgba(120, 113, 108, 0.6)",
+    }
+    : {
+      active: "rgba(64, 64, 64, 0.8)",
+      inactive: "rgba(100, 100, 100, 0.5)",
+      processing: "rgba(64, 64, 64, 0.6)",
+      error: "rgba(180, 83, 83, 0.7)",
+    }
 
   const color = glowColor || statusColors[status]
 
   return (
     <motion.div
       className={cn(
-        "relative flex items-center justify-center rounded-lg border bg-neutral-900/50",
+        "relative flex items-center justify-center rounded-lg border",
+        isDark ? "bg-neutral-900/50" : "bg-neutral-200/60",
         sizeClasses[size],
         className
       )}
@@ -497,11 +587,38 @@ interface CircuitTraceProps {
 function CircuitTrace({
   path,
   animated = true,
-  color = "rgba(163, 163, 163, 0.25)",
-  pulseColor = "rgba(163, 163, 163, 0.6)",
+  color,
+  pulseColor,
   width = 2,
   pulseSpeed = 2,
 }: CircuitTraceProps) {
+  const [isDark, setIsDark] = React.useState(true)
+
+  React.useEffect(() => {
+    const checkTheme = () => {
+      const isDarkMode = document.documentElement.classList.contains("dark") ||
+        document.body.classList.contains("dark") ||
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+      setIsDark(isDarkMode)
+    }
+
+    checkTheme()
+
+    const observer = new MutationObserver(checkTheme)
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] })
+    observer.observe(document.body, { attributes: true, attributeFilter: ["class"] })
+
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)")
+    mediaQuery.addEventListener("change", checkTheme)
+
+    return () => {
+      observer.disconnect()
+      mediaQuery.removeEventListener("change", checkTheme)
+    }
+  }, [])
+
+  const computedColor = color || (isDark ? "rgba(163, 163, 163, 0.25)" : "rgba(64, 64, 64, 0.35)")
+  const computedPulseColor = pulseColor || (isDark ? "rgba(163, 163, 163, 0.6)" : "rgba(64, 64, 64, 0.7)")
   const pathLength = 500
 
   return (
@@ -520,7 +637,7 @@ function CircuitTrace({
       <motion.path
         d={path}
         fill="none"
-        stroke={color}
+        stroke={computedColor}
         strokeWidth={width}
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -534,7 +651,7 @@ function CircuitTrace({
         <motion.path
           d={path}
           fill="none"
-          stroke={pulseColor}
+          stroke={computedPulseColor}
           strokeWidth={width + 2}
           strokeLinecap="round"
           strokeLinejoin="round"
